@@ -1,0 +1,10 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import AboutView from "../components/AboutView.svelte";
+---
+
+<MainLayout currentPage="about">
+  <div class="h-full overflow-y-auto p-6">
+    <AboutView client:load />
+  </div>
+</MainLayout>

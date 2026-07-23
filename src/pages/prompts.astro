@@ -1,0 +1,10 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import PromptsView from "../components/PromptsView.svelte";
+---
+
+<MainLayout currentPage="prompts">
+  <div class="h-full overflow-y-auto p-6">
+    <PromptsView client:load />
+  </div>
+</MainLayout>

@@ -1,0 +1,10 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import ChatView from "../components/ChatView.svelte";
+---
+
+<MainLayout currentPage="chat">
+  <div class="h-full">
+    <ChatView client:load />
+  </div>
+</MainLayout>

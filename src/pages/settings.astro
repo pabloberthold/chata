@@ -1,0 +1,10 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import SettingsView from "../components/SettingsView.svelte";
+---
+
+<MainLayout currentPage="settings">
+  <div class="h-full overflow-y-auto p-6">
+    <SettingsView client:load />
+  </div>
+</MainLayout>

@@ -1,0 +1,10 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import AgentsView from "../components/AgentsView.svelte";
+---
+
+<MainLayout currentPage="agents">
+  <div class="h-full overflow-y-auto p-6">
+    <AgentsView client:load />
+  </div>
+</MainLayout>

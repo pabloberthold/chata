@@ -1,0 +1,10 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import HistoryView from "../components/HistoryView.svelte";
+---
+
+<MainLayout currentPage="history">
+  <div class="h-full overflow-y-auto p-6">
+    <HistoryView client:load />
+  </div>
+</MainLayout>
