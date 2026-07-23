@@ -7,10 +7,15 @@ import { MemoryPlugin } from "./MemoryPlugin";
 import { MarkdownPlugin } from "./MarkdownPlugin";
 import { HighlightPlugin } from "./HighlightPlugin";
 
+const maskOutput = new MaskPlugin();
+maskOutput.id = "mask-output";
+maskOutput.phase = "output";
+
 const BUILTIN_PLUGINS: ChatPlugin[] = [
   new AliasPlugin(),
   new VariablesPlugin(),
   new MaskPlugin(),
+  maskOutput,
   new PromptPlugin(),
   new MemoryPlugin(),
   new MarkdownPlugin(),
@@ -73,7 +78,7 @@ export class Pipeline {
       .sort((a, b) => a.order - b.order);
 
     const orderedPlugins = pluginIds.length > 0
-      ? enabledPlugins.filter((p) => pluginIds.includes(p.id))
+      ? enabledPlugins.filter((p) => pluginIds.some((id) => p.id === id || p.id === `${id}-output`))
       : enabledPlugins;
 
     for (const plugin of orderedPlugins) {

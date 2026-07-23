@@ -100,10 +100,16 @@ export async function sendMessage(
       onChunk
     );
 
+    const processedOutput = await defaultPipeline.processOutput(
+      agent?.plugins || [],
+      { content: fullContent, conversationId, agentId, modelId: resolvedModel, metadata: {} },
+      pluginContext
+    );
+
     const assistantMessage: Message = {
       id: generateId(),
       role: "assistant",
-      content: fullContent,
+      content: processedOutput.content,
       timestamp: Date.now(),
       agentId,
     };
@@ -115,7 +121,7 @@ export async function sendMessage(
     }
 
     await saveConversation(conv);
-    onDone(fullContent);
+    onDone(processedOutput.content);
   } catch (err) {
     onError(err instanceof Error ? err : new Error(String(err)));
   }

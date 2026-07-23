@@ -13,9 +13,9 @@ export class MaskPlugin implements ChatPlugin {
   async process(input: PluginInput, _context: PluginContext): Promise<PluginOutput> {
     const masks = await listMasks();
     this.currentMasks = [];
+    let content = input.content;
 
     if (this.phase === "input") {
-      let content = input.content;
       for (const entry of masks) {
         if (!entry.enabled) continue;
         const regex = new RegExp(escapeRegex(entry.original), "gi");
@@ -25,6 +25,15 @@ export class MaskPlugin implements ChatPlugin {
         }
       }
       return { content, metadata: { ...input.metadata, appliedMasks: this.currentMasks } };
+    }
+
+    if (this.phase === "output") {
+      for (const entry of masks) {
+        if (!entry.enabled) continue;
+        const regex = new RegExp(escapeRegex(entry.masked), "gi");
+        content = content.replace(regex, entry.original);
+      }
+      return { content, metadata: input.metadata };
     }
 
     return { content: input.content, metadata: input.metadata };
